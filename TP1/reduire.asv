@@ -7,13 +7,13 @@ width = size(I_originale,1);
 height = size(I_originale,2);
 I_reduite = zeros(width/f, height/f);
 
-for i=1:width/f
+for i=1:f:width
     temp=zeros(1, height/f)
-    for j=1:height/f
-        temp(j) = I_originale(i*f,j*f);
+    for j=1:f:height
+        temp = [temp I_originale(i,j)];
                
     end
-    I_reduite(i,:) = temp;
+    I_reduite = [I_reduite temp];
 end    
 end
 
