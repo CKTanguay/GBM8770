@@ -5,15 +5,10 @@ function [I_reduite] = reduire(I_originale,f)
 %dims = size(matrix);
 width = size(I_originale,1);
 height = size(I_originale,2);
-I_reduite = zeros(width/f, height/f);
-
-for i=1:width/f
-    temp=zeros(1, height/f)
-    for j=1:height/f
-        temp(j) = I_originale(i*f,j*f);
-               
-    end
-    I_reduite(i,:) = temp;
+I_reduite = zeros(floor(width/f), floor(height/f), 'uint8');
+for i=1:floor(width/f)
+    for j=1:floor(height/f)
+        I_reduite(i,j) = I_originale(i*f,j*f);
+    end    
 end    
 end
-

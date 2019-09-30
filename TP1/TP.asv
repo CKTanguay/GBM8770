@@ -132,8 +132,4 @@ title('Image bruitée de variance 1');
 % Q1
 signal_src = load("signal_diaph.mat");
 plot(signal_src)
-title('Activite electrique du diaphragme')
-grid('on')
-legend('signal', 'Location', 'best')
-xlabel('Time (s)')
-ylabel('Frequence (Hz)')
+title('Graphe de l
