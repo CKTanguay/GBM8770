@@ -185,5 +185,9 @@ freqz(rif_PB)
 %% Exercice V
 
 % Q1
-
+% Selon les notes de cours (diapositive 53), le filtrage par fenêtre
+% pourrait être une bonne stratégie pour ce laboratoire, car ces dernières
+% sont intuitives, elles sont facilement générables dans Matlab et les
+% phases introduites sont linéaires. Toutefois, le filtrage par fenêtre est
+% celui qui introduit le plus de vibrations.
 
