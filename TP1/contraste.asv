@@ -1,8 +1,0 @@
-function [C] = contraste(yC1,yC2,xC1,xC2, yfond, xfond,matrix)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-Rcible = matrix[yC1:yC2, xC1:xC2];
-Rfond = matrix[yF1:yF2, xF1:xC2];
-C=abs((Icible-Ifond)/Ifond);
-end
-

@@ -131,5 +131,59 @@ title('Image bruitée de variance 1');
 
 % Q1
 signal_src = load("signal_diaph.mat");
-plot(signal_src)
-title('Graphe de l
+x_axis = linspace(0, 2, 1000);
+plot(x_axis, signal_src.newsignal)
+title('Activite electrique du diaphragme')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+% Q2
+tfd = fft(signal_src.newsignal);
+magnitude = abs(tfd);
+plot(x_axis, signal_src.newsignal, 'r')
+hold on
+phase = angle(tfd);
+plot(x_axis, phase, 'g')
+hold off
+
+% Q3
+order = 400;
+fc = 4;
+fe = 500;
+wc = 2*(fc/fe);
+rif = fir1(order, wc, 'high');
+
+impz(rif)
+freqz(rif)
+
+%filtered_signal = filter(rif, signal_src.newsignal);
+
+
+% Q5
+order_PB = 35;
+fc_PB = 50;
+wc_PB = 2*(fc_PB/fe);
+rif_PB = fir1(order_PB, wc_PB, 'low');
+
+impz(rif_PB)
+freqz(rif_PB)
+
+
+%filter signal with PB
+% final_filtered_signal
+%x_axis = linspace(0, 2, 1000);
+%plot(x_axis, final_filtered_signal)
+%title('Signal filtre final')
+%grid('on')
+%legend('Signal', 'Location', 'best')
+%xlabel('Time (s)')
+%ylabel('Frequence (Hz)')
+
+
+%% Exercice V
+
+% Q1
+
+
