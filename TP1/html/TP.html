@@ -1,0 +1,766 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TP</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-03"><meta name="DC.source" content="TP.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercice I</a></li><li><a href="#2">Exercice II</a></li><li><a href="#3">Exercice III</a></li><li><a href="#4">Exercice IV</a></li><li><a href="#5">Exercice V</a></li></ul></div><h2 id="1">Exercice I</h2><p>Q1</p><pre class="codeinput">matrix=imread(<span class="string">"fundus_image.png"</span>);
+figure(1), imshow(<span class="string">"fundus_image.png"</span>)
+title(<span class="string">'Disque optique dans une image fundus'</span>)
+
+<span class="comment">% Q2</span>
+type <span class="string">reduire.m</span>
+
+<span class="comment">% Q3</span>
+f = [2 4 8 16 32 64 150];
+<span class="keyword">for</span> i = 1:7
+    image_reduite = reduire(matrix,f(i));
+    figure,imshow(image_reduite,<span class="string">'InitialMagnification'</span>, <span class="string">'fit'</span>)
+    title([<span class="string">'Image reduite facteur '</span>, num2str(f(i))])
+<span class="keyword">end</span>
+
+<span class="comment">% Q4</span>
+<span class="comment">% L'image est de plus en plus pixelis&eacute;e et il y a une perte de r&eacute;solution.</span>
+<span class="comment">% La segmentation du disque sera difficile &agrave; r&eacute;aliser &agrave; partir du facteur</span>
+<span class="comment">% 32 et celle des vaisseaux &agrave; partir d'un facteur de 16.</span>
+</pre><pre class="codeoutput">
+function [I_reduite] = reduire(I_originale,f)
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+
+%dims = size(matrix);
+width = size(I_originale,1);
+height = size(I_originale,2);
+I_reduite = zeros(floor(width/f), floor(height/f), 'uint8');
+for i=1:floor(width/f)
+    for j=1:floor(height/f)
+        I_reduite(i,j) = I_originale(i*f,j*f);
+    end    
+end    
+end
+</pre><img vspace="5" hspace="5" src="TP_01.png" alt=""> <img vspace="5" hspace="5" src="TP_02.png" alt=""> <img vspace="5" hspace="5" src="TP_03.png" alt=""> <img vspace="5" hspace="5" src="TP_04.png" alt=""> <img vspace="5" hspace="5" src="TP_05.png" alt=""> <img vspace="5" hspace="5" src="TP_06.png" alt=""> <img vspace="5" hspace="5" src="TP_07.png" alt=""> <img vspace="5" hspace="5" src="TP_08.png" alt=""> <h2 id="2">Exercice II</h2><p>Q1</p><pre class="codeinput">matrix1=imread(<span class="string">"crane1.png"</span>);
+figure(9),imshow(<span class="string">"crane1.png"</span>)
+title(<span class="string">'Crane 1'</span>)
+[x1,y1]=ginput(2);
+
+matrix2=imread(<span class="string">"crane2.png"</span>);
+figure(10),imshow(<span class="string">"crane2.png"</span>)
+title(<span class="string">'Crane 2'</span>)
+[x2,y2]=ginput(2);
+
+matrix3=imread(<span class="string">"crane3.png"</span>);
+figure(11),imshow(<span class="string">"crane3.png"</span>)
+title(<span class="string">'Crane 3'</span>)
+[x3,y3]=ginput(2);
+
+<span class="comment">% Q2</span>
+[p1] = improfile(matrix1,x1,y1);
+[p2] = improfile(matrix2,x2,y2);
+[p3] = improfile(matrix3,x3,y3);
+plot(p1, <span class="string">'r'</span>)
+hold <span class="string">on</span>
+plot(p2, <span class="string">'g'</span>)
+hold <span class="string">on</span>
+plot(p3, <span class="string">'b'</span>)
+title(<span class="string">'Profil des images'</span>)
+legend(<span class="string">'crane 1'</span>, <span class="string">'crane2 '</span>, <span class="string">'crane 3'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>);
+hold <span class="string">off</span>
+
+<span class="comment">%Q3</span>
+yC1 = 120;
+yC2 = 150;
+xC1 = 114;
+xC2 = 144;
+
+yF1 = 155;
+yF2 = 185;
+xF1 = 59;
+xF2 = 89;
+
+<span class="comment">% Q4</span>
+figure(12), imshow(<span class="string">"crane1.png"</span>)
+title(<span class="string">'Crane 1 avec regions'</span>);
+hold <span class="string">on</span>
+rectangle(<span class="string">'Position'</span>,[114,144,120,150],<span class="string">'EdgeColor'</span>, <span class="string">'r'</span>)
+rectangle(<span class="string">'Position'</span>,[59,89,155,185],<span class="string">'EdgeColor'</span>, <span class="string">'g'</span>)
+hold <span class="string">off</span>
+
+<span class="comment">% Q5</span>
+contraste1 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix1);
+contraste2 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix2);
+contraste3 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix3);
+
+<span class="comment">% Q6</span>
+<span class="comment">% Plus le contraste est &eacute;lev&eacute;, plus il est difficile de bien analyser les</span>
+<span class="comment">% radiographies et d'ensuite poser un diagnostic. &raquo;Il ne faut tout de m&ecirc;me</span>
+<span class="comment">% pas que le contraste soit trop faible.</span>
+</pre><img vspace="5" hspace="5" src="TP_09.png" alt=""> <img vspace="5" hspace="5" src="TP_10.png" alt=""> <img vspace="5" hspace="5" src="TP_11.png" alt=""> <img vspace="5" hspace="5" src="TP_12.png" alt=""> <img vspace="5" hspace="5" src="TP_13.png" alt=""> <h2 id="3">Exercice III</h2><pre class="codeinput">matrix1=imread(<span class="string">"crane1.png"</span>);
+
+<span class="comment">% Q1</span>
+<span class="comment">% --</span>
+
+<span class="comment">% Q2</span>
+yC1 = 120;
+yC2 = 150;
+xC1 = 114;
+xC2 = 144;
+
+yF1 = 155;
+yF2 = 185;
+xF1 = 59;
+xF2 = 89;
+
+snr = rapport_SNR(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix1);
+
+<span class="comment">% Q3</span>
+noisy_matrix = imnoise(matrix1, <span class="string">'gaussian'</span>, 0, 0.005);
+figure(13), imshow(noisy_matrix)
+title(<span class="string">'Image bruit&eacute;e'</span>);
+
+<span class="comment">% Q4</span>
+noisy_snr = rapport_SNR(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, noisy_matrix);
+
+<span class="comment">% Q5</span>
+<span class="comment">% Variance de 0.2</span>
+noisy_matrix_2 = imnoise(matrix1, <span class="string">'gaussian'</span>, 0, 0.2);
+figure(14), imshow(noisy_matrix_2)
+title(<span class="string">'Image bruit&eacute;e de variance 0.2'</span>);
+
+<span class="comment">% Variance de 0.5</span>
+noisy_matrix_3 = imnoise(matrix1, <span class="string">'gaussian'</span>, 0, 0.5);
+figure(15), imshow(noisy_matrix_3)
+title(<span class="string">'Image bruit&eacute;e de variance 0.5'</span>);
+
+<span class="comment">% Variance de 1</span>
+noisy_matrix_4 = imnoise(matrix1, <span class="string">'gaussian'</span>, 0, 1);
+figure(16), imshow(noisy_matrix_4)
+title(<span class="string">'Image bruit&eacute;e de variance 1'</span>);
+
+<span class="comment">% Q6</span>
+<span class="comment">% Plus le bruit augmente, moins l'image devient visible et d&eacute;chiffrable.</span>
+</pre><img vspace="5" hspace="5" src="TP_14.png" alt=""> <img vspace="5" hspace="5" src="TP_15.png" alt=""> <img vspace="5" hspace="5" src="TP_16.png" alt=""> <img vspace="5" hspace="5" src="TP_17.png" alt=""> <h2 id="4">Exercice IV</h2><pre class="codeinput"><span class="comment">% Q1</span>
+signal_src = load(<span class="string">"signal_diaph.mat"</span>);
+x_axis = linspace(0, 2, 1000);
+figure(29)
+plot(x_axis, signal_src.newsignal)
+title(<span class="string">'Activite electrique du diaphragme'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+<span class="comment">% Q2</span>
+tfd = fft(signal_src.newsignal);
+magnitude = abs(tfd);
+figure(30)
+plot(x_axis, signal_src.newsignal, <span class="string">'r'</span>)
+title(<span class="string">'Magnitude de la phase du spectre'</span>)
+hold <span class="string">on</span>
+phase = angle(tfd);
+plot(x_axis, phase, <span class="string">'g'</span>)
+legend(<span class="string">'magnitude'</span>, <span class="string">'phase'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+hold <span class="string">off</span>
+
+<span class="comment">% Q3</span>
+order = 400;
+fc = 4;
+fe = 500;
+wc = 2*(fc/fe);
+rif = fir1(order, wc, <span class="string">'high'</span>);
+
+figure(33)
+impz(rif)
+freqz(rif)
+title(<span class="string">'Reponse impulsionnelle et frequentielle du filtre passe haut'</span>)
+
+filtered_signal = filter(rif, 1, signal_src.newsignal);
+
+figure(32)
+plot(x_axis, filtered_signal, <span class="string">'b'</span>)
+title(<span class="string">'Signal filtre passe haut'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'Signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+<span class="comment">% Dans le domaine fr&eacute;quentiel, nous observons que le filtre a enlev&eacute; la</span>
+<span class="comment">% fr&eacute;quence continue en 0. Notre signal filtr&eacute; par le passe haut contient</span>
+<span class="comment">% d&eacute;sormais les fr&eacute;quences plus grandes que 4Hz. Quant au domaine temporel,</span>
+<span class="comment">% le signal est d&eacute;cal&eacute; de 400 "points", ce qui correspond &agrave; l'ordre du</span>
+<span class="comment">% filtre. Ces points sont les donn&eacute;es perdues au tout d&eacute;but de la s&eacute;quence</span>
+<span class="comment">% de filtrage.</span>
+
+<span class="comment">% Q4</span>
+order_PB = 35;
+fc_PB = 50;
+wc_PB = 2*(fc_PB/fe);
+rif_PB = fir1(order_PB, wc_PB, <span class="string">'low'</span>);
+
+figure(34)
+impz(rif_PB)
+freqz(rif_PB)
+title(<span class="string">'Reponse impulsionnelle et frequentielle du filtre passe bas'</span>)
+
+final_filtered_signal = filter(rif_PB, 1, filtered_signal);
+x_axis = linspace(0, 2, 1000);
+figure(31)
+plot(x_axis, final_filtered_signal)
+title(<span class="string">'Signal filtre final'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'Signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+<span class="comment">% Dans le domaine fr&eacute;quentiel, nous pouvons observer que le filtre passe</span>
+<span class="comment">% bas enl&egrave;ve le bruit (fr&eacute;quences sup&eacute;rieures &agrave; 50Hz). Dans le domaine</span>
+<span class="comment">% temporel, il est possible d'observer que le signal est d&eacute;sormais plus</span>
+<span class="comment">% lisse, encore une fois gr&acirc;ce au filtrage du signal qui enl&egrave;ve le bruit.</span>
+</pre><img vspace="5" hspace="5" src="TP_18.png" alt=""> <img vspace="5" hspace="5" src="TP_19.png" alt=""> <img vspace="5" hspace="5" src="TP_20.png" alt=""> <img vspace="5" hspace="5" src="TP_21.png" alt=""> <img vspace="5" hspace="5" src="TP_22.png" alt=""> <img vspace="5" hspace="5" src="TP_23.png" alt=""> <h2 id="5">Exercice V</h2><pre class="codeinput"><span class="comment">% Q1</span>
+<span class="comment">% Selon les notes de cours (diapositive 53), le filtrage par fen&ecirc;tre</span>
+<span class="comment">% pourrait &ecirc;tre une bonne strat&eacute;gie pour ce laboratoire, car ces derni&egrave;res</span>
+<span class="comment">% sont intuitives, elles sont facilement g&eacute;n&eacute;rables dans Matlab et les</span>
+<span class="comment">% phases introduites sont lin&eacute;aires. Toutefois, le filtrage par fen&ecirc;tre est</span>
+<span class="comment">% celui qui introduit le plus de vibrations.3</span>
+
+<span class="comment">% Q2</span>
+<span class="comment">% Frequence de 0.12Hz</span>
+fc1 = (0.12*500)/2;
+
+<span class="comment">% Frequence de 0.28Hz</span>
+fc2 = (0.28*500)/2;
+
+<span class="comment">% Q3</span>
+figure(17)
+signal = load(<span class="string">"f_rect_12"</span>);
+x_axis = linspace(0, 2, 1000);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Rectangle 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(18)
+signal = load(<span class="string">"f_rect_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Rectangle 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(19)
+signal = load(<span class="string">"f_blackman_12"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Blackman 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(20)
+signal = load(<span class="string">"f_blackman_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Blackman 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(21)
+signal = load(<span class="string">"f_bartlett_12"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Bartlett 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(22)
+signal = load(<span class="string">"f_bartlett_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Bartlett 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(23)
+signal = load(<span class="string">"f_hamming_12"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Hamming 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(24)
+signal = load(<span class="string">"f_hamming_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Hamming 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(25)
+signal = load(<span class="string">"f_hanning_12"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Haning 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(26)
+signal = load(<span class="string">"f_hanning_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Haning 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(27)
+signal = load(<span class="string">"f_tuckey_12"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Tuckey 0.12'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+figure(28)
+signal = load(<span class="string">"f_tuckey_28"</span>);
+plot(x_axis, signal.signal_postfiltre)
+title(<span class="string">'Filtre Tuckey 0.28'</span>)
+grid(<span class="string">'on'</span>)
+legend(<span class="string">'signal'</span>, <span class="string">'Location'</span>, <span class="string">'best'</span>)
+xlabel(<span class="string">'Time (s)'</span>)
+ylabel(<span class="string">'Frequence (Hz)'</span>)
+
+<span class="comment">% Q4</span>
+<span class="comment">% On peut observer en g&eacute;n&eacute;ral que le signal est mieux filtr&eacute; avec une</span>
+<span class="comment">% fr&eacute;quence de coupure de 0.12. En effet, on remarque que le signal filtr&eacute;</span>
+<span class="comment">% avec une fr&eacute;quence de coupure de 0.28 contient davantage de bruit. Les</span>
+<span class="comment">% trois meilleurs filtres, (ceux qui enl&egrave;vent le plus de bruit), sont</span>
+<span class="comment">% Hamming, Haning et Blackman, tel qu'attendu. En effet, il est possible de</span>
+<span class="comment">% voir dans la r&eacute;ponse fr&eacute;quentielle du signal d'entr&eacute;e qu'il y a du bruit</span>
+<span class="comment">% &egrave;a environ 0.20 et que dans la r&eacute;ponse fr&eacute;quentielle de ces trois filtres</span>
+<span class="comment">% que ces fr&eacute;quences sont coup&eacute;es. Tandis que pour les autres filtres, la</span>
+<span class="comment">% pente de r&eacute;ponse en fr&eacute;quence est moins prononc&eacute;e, ce qui entra&icirc;ne</span>
+<span class="comment">% n&eacute;cessairement une infiltration de bruit dans notre signal final.</span>
+</pre><img vspace="5" hspace="5" src="TP_24.png" alt=""> <img vspace="5" hspace="5" src="TP_25.png" alt=""> <img vspace="5" hspace="5" src="TP_26.png" alt=""> <img vspace="5" hspace="5" src="TP_27.png" alt=""> <img vspace="5" hspace="5" src="TP_28.png" alt=""> <img vspace="5" hspace="5" src="TP_29.png" alt=""> <img vspace="5" hspace="5" src="TP_30.png" alt=""> <img vspace="5" hspace="5" src="TP_31.png" alt=""> <img vspace="5" hspace="5" src="TP_32.png" alt=""> <img vspace="5" hspace="5" src="TP_33.png" alt=""> <img vspace="5" hspace="5" src="TP_34.png" alt=""> <img vspace="5" hspace="5" src="TP_35.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercice I
+% Q1
+matrix=imread("fundus_image.png");
+figure(1), imshow("fundus_image.png")
+title('Disque optique dans une image fundus')
+
+% Q2
+type reduire.m
+
+% Q3
+f = [2 4 8 16 32 64 150];
+for i = 1:7
+    image_reduite = reduire(matrix,f(i));
+    figure,imshow(image_reduite,'InitialMagnification', 'fit')
+    title(['Image reduite facteur ', num2str(f(i))])
+end
+
+% Q4
+% L'image est de plus en plus pixelisée et il y a une perte de résolution. 
+% La segmentation du disque sera difficile à réaliser à partir du facteur
+% 32 et celle des vaisseaux à partir d'un facteur de 16.
+
+%% Exercice II
+% Q1
+matrix1=imread("crane1.png");
+figure(9),imshow("crane1.png")
+title('Crane 1')
+[x1,y1]=ginput(2);
+
+matrix2=imread("crane2.png");
+figure(10),imshow("crane2.png")
+title('Crane 2')
+[x2,y2]=ginput(2);
+
+matrix3=imread("crane3.png");
+figure(11),imshow("crane3.png")
+title('Crane 3')
+[x3,y3]=ginput(2);
+
+% Q2
+[p1] = improfile(matrix1,x1,y1);
+[p2] = improfile(matrix2,x2,y2);
+[p3] = improfile(matrix3,x3,y3);
+plot(p1, 'r')
+hold on
+plot(p2, 'g')
+hold on
+plot(p3, 'b')
+title('Profil des images')
+legend('crane 1', 'crane2 ', 'crane 3', 'Location', 'best');
+hold off
+
+%Q3
+yC1 = 120;
+yC2 = 150;
+xC1 = 114;
+xC2 = 144;
+
+yF1 = 155;
+yF2 = 185;
+xF1 = 59;
+xF2 = 89;
+
+% Q4
+figure(12), imshow("crane1.png")
+title('Crane 1 avec regions');
+hold on
+rectangle('Position',[114,144,120,150],'EdgeColor', 'r')
+rectangle('Position',[59,89,155,185],'EdgeColor', 'g')
+hold off
+
+% Q5
+contraste1 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix1);
+contraste2 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix2);
+contraste3 = contraste(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix3);
+
+% Q6
+% Plus le contraste est élevé, plus il est difficile de bien analyser les
+% radiographies et d'ensuite poser un diagnostic. »Il ne faut tout de même
+% pas que le contraste soit trop faible.
+
+%% Exercice III
+
+matrix1=imread("crane1.png");
+
+% Q1
+% REPLACE_WITH_DASH_DASH
+
+% Q2
+yC1 = 120;
+yC2 = 150;
+xC1 = 114;
+xC2 = 144;
+
+yF1 = 155;
+yF2 = 185;
+xF1 = 59;
+xF2 = 89;
+
+snr = rapport_SNR(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, matrix1);
+
+% Q3
+noisy_matrix = imnoise(matrix1, 'gaussian', 0, 0.005);
+figure(13), imshow(noisy_matrix)
+title('Image bruitée');
+
+% Q4
+noisy_snr = rapport_SNR(yC1, yC2, xC1, xC2, yF1, yF2, xF1, xF2, noisy_matrix);
+
+% Q5
+% Variance de 0.2
+noisy_matrix_2 = imnoise(matrix1, 'gaussian', 0, 0.2);
+figure(14), imshow(noisy_matrix_2)
+title('Image bruitée de variance 0.2');
+
+% Variance de 0.5
+noisy_matrix_3 = imnoise(matrix1, 'gaussian', 0, 0.5);
+figure(15), imshow(noisy_matrix_3)
+title('Image bruitée de variance 0.5');
+
+% Variance de 1
+noisy_matrix_4 = imnoise(matrix1, 'gaussian', 0, 1);
+figure(16), imshow(noisy_matrix_4)
+title('Image bruitée de variance 1');
+
+% Q6
+% Plus le bruit augmente, moins l'image devient visible et déchiffrable.
+
+
+%% Exercice IV
+
+% Q1
+signal_src = load("signal_diaph.mat");
+x_axis = linspace(0, 2, 1000);
+figure(29)
+plot(x_axis, signal_src.newsignal)
+title('Activite electrique du diaphragme')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+% Q2
+tfd = fft(signal_src.newsignal);
+magnitude = abs(tfd);
+figure(30)
+plot(x_axis, signal_src.newsignal, 'r')
+title('Magnitude de la phase du spectre')
+hold on
+phase = angle(tfd);
+plot(x_axis, phase, 'g')
+legend('magnitude', 'phase', 'Location', 'best')
+hold off
+
+% Q3
+order = 400;
+fc = 4;
+fe = 500;
+wc = 2*(fc/fe);
+rif = fir1(order, wc, 'high');
+
+figure(33)
+impz(rif)
+freqz(rif)
+title('Reponse impulsionnelle et frequentielle du filtre passe haut')
+
+filtered_signal = filter(rif, 1, signal_src.newsignal);
+
+figure(32)
+plot(x_axis, filtered_signal, 'b')
+title('Signal filtre passe haut')
+grid('on')
+legend('Signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+% Dans le domaine fréquentiel, nous observons que le filtre a enlevé la
+% fréquence continue en 0. Notre signal filtré par le passe haut contient
+% désormais les fréquences plus grandes que 4Hz. Quant au domaine temporel,
+% le signal est décalé de 400 "points", ce qui correspond à l'ordre du
+% filtre. Ces points sont les données perdues au tout début de la séquence
+% de filtrage.
+
+% Q4
+order_PB = 35;
+fc_PB = 50;
+wc_PB = 2*(fc_PB/fe);
+rif_PB = fir1(order_PB, wc_PB, 'low');
+
+figure(34)
+impz(rif_PB)
+freqz(rif_PB)
+title('Reponse impulsionnelle et frequentielle du filtre passe bas')
+
+final_filtered_signal = filter(rif_PB, 1, filtered_signal);
+x_axis = linspace(0, 2, 1000);
+figure(31)
+plot(x_axis, final_filtered_signal)
+title('Signal filtre final')
+grid('on')
+legend('Signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+% Dans le domaine fréquentiel, nous pouvons observer que le filtre passe
+% bas enlève le bruit (fréquences supérieures à 50Hz). Dans le domaine
+% temporel, il est possible d'observer que le signal est désormais plus
+% lisse, encore une fois grâce au filtrage du signal qui enlève le bruit.
+
+
+%% Exercice V
+
+% Q1
+% Selon les notes de cours (diapositive 53), le filtrage par fenêtre
+% pourrait être une bonne stratégie pour ce laboratoire, car ces dernières
+% sont intuitives, elles sont facilement générables dans Matlab et les
+% phases introduites sont linéaires. Toutefois, le filtrage par fenêtre est
+% celui qui introduit le plus de vibrations.3
+
+% Q2
+% Frequence de 0.12Hz
+fc1 = (0.12*500)/2;
+
+% Frequence de 0.28Hz
+fc2 = (0.28*500)/2;
+
+% Q3
+figure(17)
+signal = load("f_rect_12");
+x_axis = linspace(0, 2, 1000);
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Rectangle 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(18)
+signal = load("f_rect_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Rectangle 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(19)
+signal = load("f_blackman_12");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Blackman 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(20)
+signal = load("f_blackman_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Blackman 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(21)
+signal = load("f_bartlett_12");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Bartlett 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(22)
+signal = load("f_bartlett_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Bartlett 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(23)
+signal = load("f_hamming_12");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Hamming 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(24)
+signal = load("f_hamming_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Hamming 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(25)
+signal = load("f_hanning_12");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Haning 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(26)
+signal = load("f_hanning_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Haning 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(27)
+signal = load("f_tuckey_12");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Tuckey 0.12')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+figure(28)
+signal = load("f_tuckey_28");
+plot(x_axis, signal.signal_postfiltre)
+title('Filtre Tuckey 0.28')
+grid('on')
+legend('signal', 'Location', 'best')
+xlabel('Time (s)')
+ylabel('Frequence (Hz)')
+
+% Q4
+% On peut observer en général que le signal est mieux filtré avec une 
+% fréquence de coupure de 0.12. En effet, on remarque que le signal filtré
+% avec une fréquence de coupure de 0.28 contient davantage de bruit. Les
+% trois meilleurs filtres, (ceux qui enlèvent le plus de bruit), sont
+% Hamming, Haning et Blackman, tel qu'attendu. En effet, il est possible de
+% voir dans la réponse fréquentielle du signal d'entrée qu'il y a du bruit
+% èa environ 0.20 et que dans la réponse fréquentielle de ces trois filtres
+% que ces fréquences sont coupées. Tandis que pour les autres filtres, la
+% pente de réponse en fréquence est moins prononcée, ce qui entraîne
+% nécessairement une infiltration de bruit dans notre signal final.
+
+##### SOURCE END #####
+--></body></html>
