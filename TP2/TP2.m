@@ -244,6 +244,113 @@ sgtitle('Modules de la FFT des images créées')
 % élevée, et ils seront rapprochés dans le cas où la fréquence est basse.
 
 
-%%
+%% Exercice 4
+
+% Q1
+type filtrage_frequentiel.m
+
+% Q2
+type filtrage_spatial.m
+
+% Q3
+matrix = imread("koala.png");
+d0 = 0.0398;
+image_filtree_freq = filtrage_frequentiel(matrix, d0);
+
+sigma = 4;
+image_filtree_spatial = filtrage_spatial(matrix, sigma);
+
+figure(), subplot(1, 2, 1)
+imshow(image_filtree_freq, [])
+title('Image filtrée dans le domaine fréquentiel');
+subplot(1, 2, 2)
+imshow(image_filtree_spatial, [])
+title('Image filtrée dans le domaine spatial');
+
+% Q4
+% En observant les images résultantes du domaine fréquentiel et du domaine
+% spatial, ces dernières semblent tout à fait identiques, mis à part les
+% contours (cadre) de l'image du domaine spatial qui sont plus foncés. La 
+% relation entre le domaine fréquentiel et le domaine spatial se fonde sur
+% le théorème de la convolution. Nous faisons une convolution pour le
+% filtre spatial avec l'image et nous faisons une multiplication dans le
+% domaine fréquentiel du filtre avec l'image encore une fois. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Q5
+% En analysant les images obtenues après l'application du filtre idéal et
+% butterworth, il est possible d'observer que l'image résultante du
+% butterworth est plus définie que celle du filtre idéal. Bien que les deux
+% soient très floues, il est plus facile de discerner les formes et
+% contours avec un butterworth. Cela s'explique par le fait que le filtre
+% butterworth coupe de façon moins «sèche» les contours des images. 
+
+im1 = imread("koala-E4-Q5-ideal.jpg");
+im2 = imread("koala-E4-Q5-butterworth.jpg");
+
+figure(), subplot(1, 2, 1)
+imshow(im1, [])
+title('Image de koala avec filtre idéal');
+subplot(1, 2, 2)
+imshow(im2, [])
+title('Image de koala avec filtre butterworth');
+
+
+%% Exercice 5
+
+% Q1
+matrix = imread("XrayBar.jpg");
+
+spectre_normal = fftshift(abs(fft2(matrix)));
+spectre_logarithmique = 1 + log(fftshift(abs(fft2(matrix))));
+
+figure(), subplot(1, 2, 1)
+imshow(spectre_normal, [])
+title('Spectre normal de limage');
+subplot(1, 2, 2)
+imshow(spectre_logarithmique, [])
+title('Spectre logarithmique de limage');
+
+%  Dans le spectre normal de l'image, nous observons un point en forme de
+%  croix. Ce point ne nous fourni pas d'autes informations sur l'image que
+%  la plus grand intensité du spectre, en général. Dans le spectre
+%  logarithmique, nous observons une image brouillée où aucunes formes ne
+%  sont discernables, mais dans laquelle on peut voir plusieurs points
+%  lumineux. Ces points représentent les lignes diagonales de bruit qui
+%  sont présentes dans l'image originale.
+
+
+% Q2
+u = [1/8 1/4 3/8];
+v = [1/8 1/4 3/8];
+frequences_coupure = [0.03 0.02 0.01];
+
+masque = filtre_selectif(matrix, frequences_coupure, u, v);
+
+figure()
+imshow(masque, [])
+title('Masque du filtre sélectif');
+% 
+% 
+% spectre = fftshift(fft2(image));
+% image_filtree = normalize(ishift(ifft2(masque.*spectre)));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
