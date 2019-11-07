@@ -4,7 +4,7 @@ matrix = imread("fundus.png");
 figure(),imshow(matrix)
 title('Disque optique dans une image fundus')
 figure(),mesh(matrix)
-title('Intensité')
+title('Intensitï¿½')
 
 % Q2
 type filtre_gaussien.m
@@ -17,21 +17,21 @@ masque3 = 1/484*[1 2 4 8 4 2 1 ; 2 4 8 16 8 4 2 ; 4 8 16 32 16 8 4 ; 8 16 32 64 
 
 image_filtre1 = filtre_gaussien(matrix,masque1);
 figure(), imshow(image_filtre1,[])
-title('Image filtrée avec masque 3x3')
+title('Image filtrï¿½e avec masque 3x3')
 figure(), mesh(image_filtre1)
-title('Intensité image filtrée masque 3x3')
+title('Intensitï¿½ image filtrï¿½e masque 3x3')
 
 image_filtre2 = filtre_gaussien(matrix,masque2);
 figure(), imshow(image_filtre2,[])
-title('Image filtrée avec masque 5x5')
+title('Image filtrï¿½e avec masque 5x5')
 figure(), mesh(image_filtre2)
-title('Intensité image filtrée masque 5x5')
+title('Intensitï¿½ image filtrï¿½e masque 5x5')
 
 image_filtre3 = filtre_gaussien(matrix,masque3);
 figure(), imshow(image_filtre3,[])
-title('Image filtrée avec masque 7x7')
+title('Image filtrï¿½e avec masque 7x7')
 figure(), mesh(image_filtre3)
-title('Intensité image filtrée masque 7x7')
+title('Intensitï¿½ image filtrï¿½e masque 7x7')
 
 % Q4
 masque = [1 2 4 8 16 8 4 2 1 ; 
@@ -49,19 +49,19 @@ masque4 = 1/m4_coef*masque;
 
 image_filtre4 = filtre_gaussien(matrix, masque4);
 figure(), imshow(image_filtre4,[])
-title('Image filtrée avec masque 9x9')
+title('Image filtrï¿½e avec masque 9x9')
 figure(), mesh(image_filtre4)
-title('Intensité image filtrée masque 9x9')
+title('Intensitï¿½ image filtrï¿½e masque 9x9')
 
-%L'augmentation de la valeur de l'écart-type de la gaussienne entraîne une
+%L'augmentation de la valeur de l'ï¿½cart-type de la gaussienne entraï¿½ne une
 %une plus grande propagation du bruit dans l'image. 
 
 % L'image originale est beaucoup plus claire que celle sur laquelle le
-% masque a été appliqué. Les contours sont moins distincts et les détails
-% moins visibles. Il est également possible de voir dans le graphe
-% d'intensité du masque 9x9 qu'il y a moins de pics d'intensité, (les
+% masque a ï¿½tï¿½ appliquï¿½. Les contours sont moins distincts et les dï¿½tails
+% moins visibles. Il est ï¿½galement possible de voir dans le graphe
+% d'intensitï¿½ du masque 9x9 qu'il y a moins de pics d'intensitï¿½, (les
 % formes sont plus arrondies), ce qui signifie que l'image contient moins
-% de détails.
+% de dï¿½tails.
 
 
 % Q5
@@ -74,17 +74,17 @@ type rehaussement_contour.m
 K = 1.5;
 image_filtree5 = rehaussement_contour(matrix, masque2, K);
 figure(), imshow(image_filtree5)
-title('Image rehaussée');
+title('Image rehaussï¿½e');
 
 image_gaussienne = conv2(matrix, masque2, 'same');
 image_filtree_L = filtre_laplacien(image_gaussienne);
 figure(), imshow(image_filtree_L, [])
 title('Image filtre Laplacien');
 
-% On peut voir dans l'image rehaussée que les contours sont moins définis
-% que dans l'image originelle, bien que cela ne soit pas le résultat
-% escompté. Cela s'explique par le fait que la taille du filtre gaussien
-% serait trop grande, donc on enlève trop de détails en tentant de
+% On peut voir dans l'image rehaussï¿½e que les contours sont moins dï¿½finis
+% que dans l'image originelle, bien que cela ne soit pas le rï¿½sultat
+% escomptï¿½. Cela s'explique par le fait que la taille du filtre gaussien
+% serait trop grande, donc on enlï¿½ve trop de dï¿½tails en tentant de
 % supprimer le bruit de l'image et le filtre Laplacien ne suffit pas pour
 % afficher clairement les contours.
 
@@ -92,13 +92,13 @@ title('Image filtre Laplacien');
 for k = 0:10
     image_filtree_k = rehaussement_contour(matrix, masque2, k);
     figure(), imshow(image_filtree_k, [])
-    title('Image rehaussée');
+    title('Image rehaussï¿½e');
     pause(0.5)
 end
 
-% Le problème lorsque la valeur de K est trop élevée est que les détails de
-% l'image deviennent de plus en plus "pixelisés". On perd une certain
-% qualité de la résolution.
+% Le problï¿½me lorsque la valeur de K est trop ï¿½levï¿½e est que les dï¿½tails de
+% l'image deviennent de plus en plus "pixelisï¿½s". On perd une certain
+% qualitï¿½ de la rï¿½solution.
 
 %% Exercice 2
 matrix = imread("fundus.png");
@@ -107,7 +107,7 @@ matrix = imread("fundus.png");
 seuil = 150;
 image_binarisee = binariser(matrix, seuil);
 figure(), imshow(image_binarisee)
-title('Image binarisée');
+title('Image binarisï¿½e');
 
 % Q2
 rayon = 2;
@@ -115,7 +115,7 @@ elem_struct = strel('disk', rayon);
 fermeture = imclose(image_binarisee, elem_struct);
 
 figure(), imshow(fermeture)
-title('Fermeture de limage binarisée');
+title('Fermeture de limage binarisï¿½e');
 
 % % Q3
 for i = 1:20
@@ -123,7 +123,7 @@ for i = 1:20
     fermeture = imerode(image_binarisee, elem_struct);
     subplot(5,4,i);
     imshow(fermeture, [])
-    title(['Image érodée avec un rayon de ', num2str(i)]);
+    title(['Image ï¿½rodï¿½e avec un rayon de ', num2str(i)]);
 end
 
 
@@ -132,17 +132,17 @@ end
 elem_structurel = strel('disk', 11);
 fermeture2 = imerode(image_binarisee, elem_structurel);
 figure(), imshow(fermeture2, [])
-title('Image érodée avec un rayon de 11');
+title('Image ï¿½rodï¿½e avec un rayon de 11');
 
 [x1,y1] = ginput(1);
-fprintf('Les coordonnées du centre du disque optique sont %d et %d \n', x1, y1)
+fprintf('Les coordonnï¿½es du centre du disque optique sont %d et %d \n', x1, y1)
 
 % Q5
-% Le rayon du disque optique en d'environ 11,5 pixels. Étant donné que nous
-% considérons que le disque optique est approximativement un cercle, nous utilisons 
-% un élément structurant qui est également un disque. Lors de l'érosion de
+% Le rayon du disque optique en d'environ 11,5 pixels. ï¿½tant donnï¿½ que nous
+% considï¿½rons que le disque optique est approximativement un cercle, nous utilisons 
+% un ï¿½lï¿½ment structurant qui est ï¿½galement un disque. Lors de l'ï¿½rosion de
 % l'image, on peut constater que le centre du disque optique disparait lorsque 
-% le rayon de l'élément structurant passe de 11 à 12 pixels. 
+% le rayon de l'ï¿½lï¿½ment structurant passe de 11 ï¿½ 12 pixels. 
 
 
 %% Exercice 3
@@ -179,18 +179,18 @@ imshow(fft_ver_norm, [])
 sgtitle('Modules de la FFT de la barre diagonale, horizontale et verticale')
 
 % Q3
-% Étant donné que les barres sur lesquelles nous appliquons la fft et la
-% normalisation peuvent être considérées comme des rectangles, la réponse
+% ï¿½tant donnï¿½ que les barres sur lesquelles nous appliquons la fft et la
+% normalisation peuvent ï¿½tre considï¿½rï¿½es comme des rectangles, la rï¿½ponse
 % que nous devrions recevoir est un sinus cardinal. C'est ce que nous
-% pouvons observer dans les 3 images générées. Il est également possible de
-% constater que les images résultantes ont toutes été tournées dans le sens
+% pouvons observer dans les 3 images gï¿½nï¿½rï¿½es. Il est ï¿½galement possible de
+% constater que les images rï¿½sultantes ont toutes ï¿½tï¿½ tournï¿½es dans le sens
 % inverse de la fft.
 
 
 % Q4
-% Comme mentionné lors de la question précédente, le résultat de la fft 
-% d'un signal d'entrée représentant un rectangle donne un sinus cardinal,
-% ce qui explique la présence de zéros dans l'image finale.
+% Comme mentionnï¿½ lors de la question prï¿½cï¿½dente, le rï¿½sultat de la fft 
+% d'un signal d'entrï¿½e reprï¿½sentant un rectangle donne un sinus cardinal,
+% ce qui explique la prï¿½sence de zï¿½ros dans l'image finale.
 
 
 % Q5
@@ -207,7 +207,7 @@ title('Image 2');
 subplot(2, 3, 3)
 imshow(image3, [])
 title('Image 3');
-sgtitle('Images créées sans FFT')
+sgtitle('Images crï¿½ï¿½es sans FFT')
 
 
 fft_image1 = fft2(image1);
@@ -228,20 +228,20 @@ subplot(2, 3, 5)
 imshow(fft_image2_norm, [])
 subplot(2, 3, 6)
 imshow(fft_image3_norm, [])
-sgtitle('Modules de la FFT des images créées')
+sgtitle('Modules de la FFT des images crï¿½ï¿½es')
 
 % Dans chaque image du module de la fft, on observe 4 points. Dans ces
-% images, on peut observer que tous  les points qui sont alignés
+% images, on peut observer que tous  les points qui sont alignï¿½s
 % verticalement correspondent aux lignes horizontales de l'image originale.
-% Il en est de même pour les points qui sont alignés horizontalement. Ces
-% derniers représentent les lignes verticales des images originales. Les
+% Il en est de mï¿½me pour les points qui sont alignï¿½s horizontalement. Ces
+% derniers reprï¿½sentent les lignes verticales des images originales. Les
 % points que nous pouvons observer sont en fait les maximums de la
-% transformée de Fourrier d'un sinus. De plus, si nous agrandissons les
+% transformï¿½e de Fourrier d'un sinus. De plus, si nous agrandissons les
 % images, il est possible de voir des ondelettes autour de ces points. Cela
 % s'explique par le fait qu'il s'agit d'une fonction de Dirac. La position
-% des points est également liée à la fréquence du signal. De fait, les
-% points seront éloignés les uns des autres lorsque la fréquence sera
-% élevée, et ils seront rapprochés dans le cas où la fréquence est basse.
+% des points est ï¿½galement liï¿½e ï¿½ la frï¿½quence du signal. De fait, les
+% points seront ï¿½loignï¿½s les uns des autres lorsque la frï¿½quence sera
+% ï¿½levï¿½e, et ils seront rapprochï¿½s dans le cas oï¿½ la frï¿½quence est basse.
 
 
 %% Exercice 4
@@ -262,35 +262,37 @@ image_filtree_spatial = filtrage_spatial(matrix, sigma);
 
 figure(), subplot(1, 2, 1)
 imshow(image_filtree_freq, [])
-title('Image filtrée dans le domaine fréquentiel');
+title('Image filtrï¿½e dans le domaine frï¿½quentiel');
 subplot(1, 2, 2)
 imshow(image_filtree_spatial, [])
-title('Image filtrée dans le domaine spatial');
+title('Image filtrï¿½e dans le domaine spatial');
 
 % Q4
-% En observant les images résultantes du domaine fréquentiel et du domaine
-% spatial, ces dernières semblent tout à fait identiques, mis à part les
-% contours (cadre) de l'image du domaine spatial qui sont plus foncés. La 
-% relation entre le domaine fréquentiel et le domaine spatial se fonde sur
-% le théorème de la convolution. Nous faisons une convolution pour le
+% En observant les images rï¿½sultantes du domaine frï¿½quentiel et du domaine
+% spatial, ces derniï¿½res semblent tout ï¿½ fait identiques, mis ï¿½ part les
+% contours (cadre) de l'image du domaine spatial qui sont plus foncï¿½s. La 
+% relation entre le domaine frï¿½quentiel et le domaine spatial se fonde sur
+% le thï¿½orï¿½me de la convolution. Nous faisons une convolution pour le
 % filtre spatial avec l'image et nous faisons une multiplication dans le
-% domaine fréquentiel du filtre avec l'image encore une fois. 
+% domaine frï¿½quentiel du filtre avec l'image encore une fois. En mettant en
+% relation les paramÃ¨tres des exponentielles, il est possible de trouver
+% l'Ã©galitÃ© fc = 1/(2pi*sigma), oÃ¹ fc est la frÃ©quence de coupure.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Q5
-% En analysant les images obtenues après l'application du filtre idéal et
-% butterworth, il est possible d'observer que l'image résultante du
-% butterworth est plus définie que celle du filtre idéal. Bien que les deux
-% soient très floues, il est plus facile de discerner les formes et
+% En analysant les images obtenues aprï¿½s l'application du filtre idï¿½al et
+% butterworth, il est possible d'observer que l'image rï¿½sultante du
+% butterworth est plus dï¿½finie que celle du filtre idï¿½al. Bien que les deux
+% soient trï¿½s floues, il est plus facile de discerner les formes et
 % contours avec un butterworth. Cela s'explique par le fait que le filtre
-% butterworth coupe de façon moins «sèche» les contours des images. 
+% butterworth coupe de faï¿½on moins ï¿½sï¿½cheï¿½ les contours des images. 
 
 im1 = imread("koala-E4-Q5-ideal.jpg");
 im2 = imread("koala-E4-Q5-butterworth.jpg");
 
 figure(), subplot(1, 2, 1)
 imshow(im1, [])
-title('Image de koala avec filtre idéal');
+title('Image de koala avec filtre idï¿½al');
 subplot(1, 2, 2)
 imshow(im2, [])
 title('Image de koala avec filtre butterworth');
@@ -313,11 +315,11 @@ title('Spectre logarithmique de limage');
 
 %  Dans le spectre normal de l'image, nous observons un point en forme de
 %  croix. Ce point ne nous fourni pas d'autes informations sur l'image que
-%  la plus grand intensité du spectre, en général. Dans le spectre
-%  logarithmique, nous observons une image brouillée où aucunes formes ne
+%  la plus grand intensitï¿½ du spectre, en gï¿½nï¿½ral. Dans le spectre
+%  logarithmique, nous observons une image brouillï¿½e oï¿½ aucunes formes ne
 %  sont discernables, mais dans laquelle on peut voir plusieurs points
-%  lumineux. Ces points représentent les lignes diagonales de bruit qui
-%  sont présentes dans l'image originale.
+%  lumineux. Ces points reprï¿½sentent les lignes diagonales de bruit qui
+%  sont prï¿½sentes dans l'image originale.
 
 
 % Q2
@@ -329,7 +331,7 @@ masque = filtre_selectif(matrix, frequences_coupure, u, v);
 
 figure()
 imshow(masque, [])
-title('Masque du filtre sélectif');
+title('Masque du filtre sï¿½lectif');
 % 
 % 
 % spectre = fftshift(fft2(image));
