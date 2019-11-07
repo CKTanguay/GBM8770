@@ -1,0 +1,879 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TP2</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-07"><meta name="DC.source" content="TP2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercice 1</a></li><li><a href="#2">Exercice 2</a></li><li><a href="#3">Exercice 3</a></li><li><a href="#4">Exercice 4</a></li><li><a href="#5">Exercice 5</a></li></ul></div><h2 id="1">Exercice 1</h2><p>Q1</p><pre class="codeinput">matrix = imread(<span class="string">"fundus.png"</span>);
+figure(),imshow(matrix)
+title(<span class="string">'Disque optique dans une image fundus'</span>)
+figure(),mesh(matrix)
+title(<span class="string">'Intensite'</span>)
+
+<span class="comment">% Q2</span>
+type <span class="string">filtre_gaussien.m</span>
+
+<span class="comment">%Q3</span>
+masque1 = 1/16*[1 2 1; 2 4 2 ; 1 2 1];
+masque2 = 1/100*[1 2 4 2 1 ; 2 4 8 4 2 ; 4 8 16 8 4 ; 2 4 8 4 2 ; 1 2 4 2 1];
+masque3 = 1/484*[1 2 4 8 4 2 1 ; 2 4 8 16 8 4 2 ; 4 8 16 32 16 8 4 ; 8 16 32 64 32 16 8 ;
+    4 8 16 32 16 8 4 ; 2 4 8 16 8 4 2 ; 1 2 4 8 4 2 1];
+
+image_filtre1 = filtre_gaussien(matrix,masque1);
+figure(), imshow(image_filtre1,[])
+title(<span class="string">'Image filtree avec masque 3x3'</span>)
+figure(), mesh(image_filtre1)
+title(<span class="string">'Intensite image filtree masque 3x3'</span>)
+
+image_filtre2 = filtre_gaussien(matrix,masque2);
+figure(), imshow(image_filtre2,[])
+title(<span class="string">'Image filtree avec masque 5x5'</span>)
+figure(), mesh(image_filtre2)
+title(<span class="string">'Intensite image filtree masque 5x5'</span>)
+
+image_filtre3 = filtre_gaussien(matrix,masque3);
+figure(), imshow(image_filtre3,[])
+title(<span class="string">'Image filtree avec masque 7x7'</span>)
+figure(), mesh(image_filtre3)
+title(<span class="string">'Intensite image filtree masque 7x7'</span>)
+
+<span class="comment">% Q4</span>
+masque = [1 2 4 8 16 8 4 2 1 ;
+         2 4 8 16 32 16 8 4 2 ;
+         4 8 16 32 64 32 16 8 4 ;
+         8 16 32 64 128 64 32 16 8 ;
+         16 32 64 128 256 128 64 32 16;
+         8 16 32 64 128 64 32 16 8;
+         4 8 16 32 64 32 16 8 4 ;
+         2 4 8 16 32 16 8 4 2 ;
+         1 2 4 8 16 8 4 2 1];
+
+m4_coef = sum(masque, <span class="string">'all'</span>);
+masque4 = 1/m4_coef*masque;
+
+image_filtre4 = filtre_gaussien(matrix, masque4);
+figure(), imshow(image_filtre4,[])
+title(<span class="string">'Image filtree avec masque 9x9'</span>)
+figure(), mesh(image_filtre4)
+title(<span class="string">'Intensite image filtree masque 9x9'</span>)
+
+<span class="comment">%L'augmentation de la valeur de l'ecart-type de la gaussienne entraine une</span>
+<span class="comment">%une plus grande propagation du bruit dans l'image.</span>
+
+<span class="comment">% L'image originale est beaucoup plus claire que celle sur laquelle le</span>
+<span class="comment">% masque a ete applique. Les contours sont moins distincts et les details</span>
+<span class="comment">% moins visibles. Il est egalement possible de voir dans le graphe</span>
+<span class="comment">% d'intensite du masque 9x9 qu'il y a moins de pics d'intensite, (les</span>
+<span class="comment">% formes sont plus arrondies), ce qui signifie que l'image contient moins</span>
+<span class="comment">% de details.</span>
+
+
+<span class="comment">% Q5</span>
+type <span class="string">filtre_laplacien.m</span>
+
+<span class="comment">% Q6</span>
+type <span class="string">rehaussement_contour.m</span>
+
+<span class="comment">% Q7</span>
+K = 1.5;
+image_filtree5 = rehaussement_contour(matrix, masque2, K);
+figure(), imshow(image_filtree5, [])
+title(<span class="string">'Image rehaussee'</span>);
+
+image_gaussienne = conv2(matrix, masque2, <span class="string">'same'</span>);
+image_filtree_L = filtre_laplacien(image_gaussienne);
+figure(), imshow(image_filtree_L, [])
+title(<span class="string">'Image filtre Laplacien'</span>);
+
+<span class="comment">% On peut voir dans l'image rehaussee que les contours sont moins definis</span>
+<span class="comment">% que dans l'image originelle, bien que cela ne soit pas le resultat</span>
+<span class="comment">% escompte. Cela s'explique par le fait que la taille du filtre gaussien</span>
+<span class="comment">% serait trop grande, donc on enleve trop de details en tentant de</span>
+<span class="comment">% supprimer le bruit de l'image et le filtre Laplacien ne suffit pas pour</span>
+<span class="comment">% afficher clairement les contours.</span>
+
+<span class="comment">% Q8</span>
+<span class="keyword">for</span> k = 0:10
+    image_filtree_k = rehaussement_contour(matrix, masque2, k);
+    figure(), imshow(image_filtree_k, [])
+    title([<span class="string">'Image rehaussee k='</span>, num2str(k)]);
+    pause(0.5)
+<span class="keyword">end</span>
+
+<span class="comment">% Le probleme lorsque la valeur de K est trop &eacute;lev&eacute;e est que les d&eacute;tails de</span>
+<span class="comment">% l'image deviennent de plus en plus "pixelis&eacute;s". On perd une certaine</span>
+<span class="comment">% qualit&eacute; de la r&eacute;solution.</span>
+</pre><pre class="codeoutput">
+function [image_filtre] = filtre_gaussien(image,masque)
+image_filtre = conv2(image,masque,'same');
+end
+
+
+function [image_filtre] = filtre_laplacien(image)
+masque = [-1 -1 -1 ; -1 8 -1 ; -1 -1 -1];
+image_filtre = conv2(image, masque, 'same');
+end
+
+
+function [image_r] = rehaussement_contour(image,masque, K)
+Ig = conv2(image, masque, 'same');
+image_filtree = filtre_laplacien(Ig);
+image_r = Ig + K*image_filtree;
+end
+
+</pre><img vspace="5" hspace="5" src="TP2_01.png" alt=""> <img vspace="5" hspace="5" src="TP2_02.png" alt=""> <img vspace="5" hspace="5" src="TP2_03.png" alt=""> <img vspace="5" hspace="5" src="TP2_04.png" alt=""> <img vspace="5" hspace="5" src="TP2_05.png" alt=""> <img vspace="5" hspace="5" src="TP2_06.png" alt=""> <img vspace="5" hspace="5" src="TP2_07.png" alt=""> <img vspace="5" hspace="5" src="TP2_08.png" alt=""> <img vspace="5" hspace="5" src="TP2_09.png" alt=""> <img vspace="5" hspace="5" src="TP2_10.png" alt=""> <img vspace="5" hspace="5" src="TP2_11.png" alt=""> <img vspace="5" hspace="5" src="TP2_12.png" alt=""> <img vspace="5" hspace="5" src="TP2_13.png" alt=""> <img vspace="5" hspace="5" src="TP2_14.png" alt=""> <img vspace="5" hspace="5" src="TP2_15.png" alt=""> <img vspace="5" hspace="5" src="TP2_16.png" alt=""> <img vspace="5" hspace="5" src="TP2_17.png" alt=""> <img vspace="5" hspace="5" src="TP2_18.png" alt=""> <img vspace="5" hspace="5" src="TP2_19.png" alt=""> <img vspace="5" hspace="5" src="TP2_20.png" alt=""> <img vspace="5" hspace="5" src="TP2_21.png" alt=""> <img vspace="5" hspace="5" src="TP2_22.png" alt=""> <img vspace="5" hspace="5" src="TP2_23.png" alt=""> <h2 id="2">Exercice 2</h2><pre class="codeinput">matrix = imread(<span class="string">"fundus.png"</span>);
+
+<span class="comment">% Q1</span>
+seuil = 150;
+image_binarisee = binariser(matrix, seuil);
+figure(), imshow(image_binarisee)
+title(<span class="string">'Image binaris&eacute;e'</span>);
+
+type <span class="string">binariser.m</span>
+
+<span class="comment">% Q2</span>
+rayon = 2;
+elem_struct = strel(<span class="string">'disk'</span>, rayon);
+fermeture = imclose(image_binarisee, elem_struct);
+
+figure(), imshow(fermeture)
+title(<span class="string">'Fermeture de limage binaris&eacute;e'</span>);
+
+<span class="comment">% Q3</span>
+<span class="keyword">for</span> i = 1:20
+    elem_struct = strel(<span class="string">'disk'</span>, i);
+    fermeture = imerode(image_binarisee, elem_struct);
+    subplot(5,4,i);
+    imshow(fermeture, [])
+    title([<span class="string">'Image &eacute;rod&eacute;e avec un rayon de '</span>, num2str(i)]);
+<span class="keyword">end</span>
+
+
+<span class="comment">% Q4</span>
+<span class="comment">% la meilleure approximation est avec un rayon de 11</span>
+elem_structurel = strel(<span class="string">'disk'</span>, 11);
+fermeture2 = imerode(image_binarisee, elem_structurel);
+figure(), imshow(fermeture2, [])
+title(<span class="string">'Image &eacute;rod&eacute;e avec un rayon de 11'</span>);
+
+[x1,y1] = ginput(1);
+fprintf(<span class="string">'Les coordonn&eacute;es du centre du disque optique sont %d et %d \n'</span>, x1, y1)
+
+<span class="comment">% Q5</span>
+<span class="comment">% Le rayon du disque optique en d'environ 11,5 pixels. &Eacute;tant donn&eacute; que nous</span>
+<span class="comment">% consid&eacute;rons que le disque optique est approximativement un cercle, nous utilisons</span>
+<span class="comment">% un &eacute;l&eacute;ment structurant qui est &eacute;galement un disque. Lors de l'&eacute;rosion de</span>
+<span class="comment">% l'image, on peut constater que le centre du disque optique disparait lorsque</span>
+<span class="comment">% le rayon de l'&eacute;l&eacute;ment structurant passe de 11 &agrave; 12 pixels.</span>
+</pre><pre class="codeoutput">
+function [image_binarisee] = binariser(image, seuil)
+    image(image&gt;=seuil)=255;
+    image(image&lt;seuil)=0;
+    image_binarisee = image;
+end
+
+Les coordonn&eacute;es du centre du disque optique sont 240 et 1.490000e+02 
+</pre><img vspace="5" hspace="5" src="TP2_24.png" alt=""> <img vspace="5" hspace="5" src="TP2_25.png" alt=""> <img vspace="5" hspace="5" src="TP2_26.png" alt=""> <h2 id="3">Exercice 3</h2><pre class="codeinput"><span class="comment">% Q1</span>
+load <span class="string">mat_barre.mat</span>;
+figure(), subplot(1, 3, 1);
+imshow(mat_barre_diag, [])
+subplot(1, 3, 2)
+imshow(mat_barre_x, [])
+subplot(1, 3, 3)
+imshow(mat_barre_y, [])
+sgtitle(<span class="string">'Barres diagonale, horizontale et verticale'</span>)
+
+<span class="comment">% Q2</span>
+fft_diag = fft2(mat_barre_diag);
+fft_diag = fftshift(fft_diag);
+fft_diag_norm = normalize(abs(fft_diag));
+
+fft_hor = fft2(mat_barre_x);
+fft_hor = fftshift(fft_hor);
+fft_hor_norm = normalize(abs(fft_hor));
+
+fft_ver = fft2(mat_barre_y);
+fft_ver = fftshift(fft_ver);
+fft_ver_norm = normalize(abs(fft_ver));
+
+figure(), subplot(1, 3, 1)
+imshow(fft_diag_norm, [])
+subplot(1, 3, 2)
+imshow(fft_hor_norm, [])
+subplot(1, 3, 3)
+imshow(fft_ver_norm, [])
+sgtitle(<span class="string">'Modules de la FFT de la barre diagonale, horizontale et verticale'</span>)
+
+type <span class="string">normalize.m</span>
+
+<span class="comment">% Q3</span>
+<span class="comment">% &Eacute;tant donn&eacute; que les barres sur lesquelles nous appliquons la fft et la</span>
+<span class="comment">% normalisation peuvent &ecirc;tre consid&eacute;r&eacute;es comme des rectangles, la r&eacute;ponse</span>
+<span class="comment">% que nous devrions recevoir est un sinus cardinal. C'est ce que nous</span>
+<span class="comment">% pouvons observer dans les 3 images g&eacute;n&eacute;r&eacute;es. Il est &eacute;galement possible de</span>
+<span class="comment">% constater que les images r&eacute;sultantes ont toutes &eacute;t&eacute; tourn&eacute;es dans le sens</span>
+<span class="comment">% inverse de la fft.</span>
+
+
+<span class="comment">% Q4</span>
+<span class="comment">% Comme mentionn&eacute; lors de la question pr&eacute;c&eacute;dente, le r&eacute;sultat de la fft</span>
+<span class="comment">% d'un signal d'entr&eacute;e repr&eacute;sentant un rectangle donne un sinus cardinal,</span>
+<span class="comment">% ce qui explique la pr&eacute;sence de z&eacute;ros dans l'image finale.</span>
+
+
+<span class="comment">% Q5</span>
+image1 = create_image(12, 80);
+image2 = create_image(12, 12);
+image3 = create_image(80, 12);
+
+figure(), subplot(2, 3, 1)
+imshow(image1, [])
+title(<span class="string">'Image 1'</span>);
+subplot(2, 3, 2)
+imshow(image2, [])
+title(<span class="string">'Image 2'</span>);
+subplot(2, 3, 3)
+imshow(image3, [])
+title(<span class="string">'Image 3'</span>);
+sgtitle(<span class="string">'Images cr&eacute;&eacute;es sans FFT'</span>)
+
+
+fft_image1 = fft2(image1);
+fft_image1 = fftshift(fft_image1);
+fft_image1_norm = normalize(abs(fft_image1));
+
+fft_image2 = fft2(image2);
+fft_image2 = fftshift(fft_image2);
+fft_image2_norm = normalize(abs(fft_image2));
+
+fft_image3 = fft2(image3);
+fft_image3 = fftshift(fft_image3);
+fft_image3_norm = normalize(abs(fft_image3));
+
+subplot(2, 3, 4)
+imshow(fft_image1_norm, [])
+subplot(2, 3, 5)
+imshow(fft_image2_norm, [])
+subplot(2, 3, 6)
+imshow(fft_image3_norm, [])
+sgtitle(<span class="string">'Modules de la FFT des images cr&eacute;&eacute;es'</span>)
+
+type <span class="string">create_image.m</span>
+
+<span class="comment">% Dans chaque image du module de la fft, on observe 4 points. Dans ces</span>
+<span class="comment">% images, on peut observer que tous  les points qui sont align&eacute;s</span>
+<span class="comment">% verticalement correspondent aux lignes horizontales de l'image originale.</span>
+<span class="comment">% Il en est de m&ecirc;me pour les points qui sont align&eacute;s horizontalement. Ces</span>
+<span class="comment">% derniers repr&eacute;sentent les lignes verticales des images originales. Les</span>
+<span class="comment">% points que nous pouvons observer sont en fait les maximums de la</span>
+<span class="comment">% transform&eacute;e de Fourrier d'un sinus. De plus, si nous agrandissons les</span>
+<span class="comment">% images, il est possible de voir des ondelettes autour de ces points. Cela</span>
+<span class="comment">% s'explique par le fait qu'il s'agit d'une fonction de Dirac. La position</span>
+<span class="comment">% des points est &eacute;galement li&eacute;e &agrave; la fr&eacute;quence du signal. De fait, les</span>
+<span class="comment">% points seront &eacute;loign&eacute;s les uns des autres lorsque la fr&eacute;quence sera</span>
+<span class="comment">% &eacute;lev&eacute;e, et ils seront rapproch&eacute;s dans le cas o&ugrave; la fr&eacute;quence est basse.</span>
+</pre><pre class="codeoutput">
+function [image_norm] = normalize(image)
+    max_image = max(image, [], 'all');
+    min_image = min(image, [], 'all');
+    [m,n] = size(image);
+    image_norm = image;
+    
+    for i=1:m
+        for j=1:n
+            image_norm(i,j) = (image(i,j) - min_image) / (max_image - min_image);
+        end
+    end
+end
+
+
+function [image] = create_image(s1, s2)
+    image = zeros(256);
+    
+    for i=1:256
+        for j=1:256
+            if i&lt;128
+                image(i,j) = sin(2*pi*s1*j/256);
+            else
+                image(i,j) = sin(2*pi*s2*i/256);
+            end
+        end
+    end
+end
+
+</pre><img vspace="5" hspace="5" src="TP2_27.png" alt=""> <img vspace="5" hspace="5" src="TP2_28.png" alt=""> <img vspace="5" hspace="5" src="TP2_29.png" alt=""> <h2 id="4">Exercice 4</h2><pre class="codeinput"><span class="comment">% Q1</span>
+type <span class="string">filtrage_frequentiel.m</span>
+
+<span class="comment">% Q2</span>
+type <span class="string">filtrage_spatial.m</span>
+
+<span class="comment">% Q3</span>
+matrix = imread(<span class="string">"koala.png"</span>);
+d0 = 0.0398;
+image_filtree_freq = filtrage_frequentiel(matrix, d0);
+
+sigma = 4;
+image_filtree_spatial = filtrage_spatial(matrix, sigma);
+
+figure(), subplot(1, 2, 1)
+imshow(image_filtree_freq, [])
+title(<span class="string">'Image filtr&eacute;e dans le domaine fr&eacute;quentiel'</span>);
+subplot(1, 2, 2)
+imshow(image_filtree_spatial, [])
+title(<span class="string">'Image filtr&eacute;e dans le domaine spatial'</span>);
+
+<span class="comment">% Q4</span>
+<span class="comment">% En observant les images r&eacute;sultantes du domaine fr&eacute;quentiel et du domaine</span>
+<span class="comment">% spatial, ces derni&egrave;res semblent tout &agrave; fait identiques, mis &agrave; part les</span>
+<span class="comment">% contours (cadre) de l'image du domaine spatial qui sont plus fonc&eacute;s. La</span>
+<span class="comment">% relation entre le domaine fr&eacute;quentiel et le domaine spatial se fonde sur</span>
+<span class="comment">% le th&eacute;or&egrave;me de la convolution. Nous faisons une convolution pour le</span>
+<span class="comment">% filtre spatial avec l'image et nous faisons une multiplication dans le</span>
+<span class="comment">% domaine fr&eacute;quentiel du filtre avec l'image encore une fois. En mettant en</span>
+<span class="comment">% relation les param&egrave;tres des exponentielles, il est possible de trouver</span>
+<span class="comment">% l'&eacute;galit&eacute; fc = 1/(2pi*sigma), o&ugrave; fc est la fr&eacute;quence de coupure.</span>
+
+
+<span class="comment">% Q5</span>
+<span class="comment">% En analysant les images obtenues apr&egrave;s l'application du filtre id&eacute;al et</span>
+<span class="comment">% butterworth, il est possible d'observer que l'image r&eacute;sultante du</span>
+<span class="comment">% butterworth est plus d&eacute;finie que celle du filtre id&eacute;al. Bien que les deux</span>
+<span class="comment">% soient tr&egrave;s floues, il est plus facile de discerner les formes et</span>
+<span class="comment">% contours avec un butterworth. Cela s'explique par le fait que le filtre</span>
+<span class="comment">% butterworth coupe de fa&ccedil;on moins s&egrave;che les contours des images.</span>
+
+im1 = imread(<span class="string">"koala-E4-Q5-ideal.jpg"</span>);
+im2 = imread(<span class="string">"koala-E4-Q5-butterworth.jpg"</span>);
+
+figure(), subplot(1, 2, 1)
+imshow(im1, [])
+title(<span class="string">'Image de koala avec filtre id&eacute;al'</span>);
+subplot(1, 2, 2)
+imshow(im2, [])
+title(<span class="string">'Image de koala avec filtre butterworth'</span>);
+</pre><pre class="codeoutput">
+function [image_filtree] = filtrage_frequentiel(image, d0)
+    [m,n] = size(image);
+    [x1,y1] = freqspace([m,n], 'meshgrid');
+    u = x1/2;
+    v = y1/2;
+    
+    spectre = fftshift(fft2(image));
+    H = exp((-u.^2-v.^2)./(2*d0^2));
+    conv_image = spectre.*H;
+    
+    image_filtree = normalize(ifft2(ifftshift(conv_image)));
+    
+    
+end
+
+
+function [image] = filtrage_spatial(image, sigma)
+    hsize = 6 * sigma;
+    mask = fspecial('gaussian', hsize, sigma);
+    image = conv2(image, mask, 'same');
+end
+
+</pre><img vspace="5" hspace="5" src="TP2_30.png" alt=""> <img vspace="5" hspace="5" src="TP2_31.png" alt=""> <h2 id="5">Exercice 5</h2><pre class="codeinput"><span class="comment">% Q1</span>
+matrix = imread(<span class="string">"XrayBar.jpg"</span>);
+
+spectre_normal = fftshift(abs(fft2(matrix)));
+spectre_logarithmique = 1 + log(fftshift(abs(fft2(matrix))));
+
+figure(), subplot(1, 2, 1)
+imshow(spectre_normal, [])
+title(<span class="string">'Spectre normal de limage'</span>);
+subplot(1, 2, 2)
+imshow(spectre_logarithmique, [])
+title(<span class="string">'Spectre logarithmique de limage'</span>);
+
+<span class="comment">%  Dans le spectre normal de l'image, nous observons un point en forme de</span>
+<span class="comment">%  croix. Ce point ne nous fourni pas d'autes informations sur l'image que</span>
+<span class="comment">%  la plus grand intensit&eacute; du spectre, en g&eacute;n&eacute;ral. Dans le spectre</span>
+<span class="comment">%  logarithmique, nous observons une image brouill&eacute;e o&ugrave; aucunes formes ne</span>
+<span class="comment">%  sont discernables, mais dans laquelle on peut voir plusieurs points</span>
+<span class="comment">%  lumineux. Ces points repr&eacute;sentent les lignes diagonales de bruit qui</span>
+<span class="comment">%  sont pr&eacute;sentes dans l'image originale.</span>
+
+
+<span class="comment">% Q2</span>
+u = [1/8 1/4 3/8];
+v = [1/8 1/4 3/8];
+frequences_coupure = [0.03 0.02 0.01];
+
+masque = filtre_selectif(matrix, frequences_coupure, u, v);
+
+figure()
+imshow(masque, [])
+title(<span class="string">'Masque du filtre s&eacute;lectif'</span>);
+
+type <span class="string">filtre_selectif.m</span>
+
+<span class="comment">% Q3</span>
+spectre = fftshift(fft2(matrix));
+image_filtree = normalize(ifft2(ifftshift(masque.*spectre)));
+figure()
+imshow(image_filtree, [])
+title(<span class="string">'Image thoracique filtr&eacute;e'</span>);
+
+<span class="comment">% Nous avons le r&eacute;sultat escompt&eacute;. Les lignes diagonales de bruit ont</span>
+<span class="comment">% presque totalement disparu. Il est possible de les voir si on magnifie</span>
+<span class="comment">% l'image, et si on observe les contours de certaines structures de</span>
+<span class="comment">% l'image.</span>
+</pre><pre class="codeoutput">
+function [masque] = filtre_selectif(image, frequences_coupure, cx, cy)
+    [m,n] = size(image);
+    [x1,y1] = freqspace([m,n], 'meshgrid');
+    u = x1/2;
+    v = y1/2;    
+    dim = size(cx);
+    masque = zeros();
+    
+    for i=1:dim(2)
+        gauss_pos = exp(-((u-cx(i)).^2 + (v-cy(i)).^2)./(2*frequences_coupure(i).^2));
+        gauss_neg = exp(-((u+cx(i)).^2 + (v+cy(i)).^2)./(2*frequences_coupure(i).^2));
+        masque = masque + (gauss_pos + gauss_neg);
+    end
+    masque = 1 - masque;
+end
+
+</pre><img vspace="5" hspace="5" src="TP2_34.png" alt=""> <img vspace="5" hspace="5" src="TP2_35.png" alt=""> <img vspace="5" hspace="5" src="TP2_36.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercice 1
+% Q1
+matrix = imread("fundus.png");
+figure(),imshow(matrix)
+title('Disque optique dans une image fundus')
+figure(),mesh(matrix)
+title('Intensite')
+
+% Q2
+type filtre_gaussien.m
+
+%Q3
+masque1 = 1/16*[1 2 1; 2 4 2 ; 1 2 1];
+masque2 = 1/100*[1 2 4 2 1 ; 2 4 8 4 2 ; 4 8 16 8 4 ; 2 4 8 4 2 ; 1 2 4 2 1];
+masque3 = 1/484*[1 2 4 8 4 2 1 ; 2 4 8 16 8 4 2 ; 4 8 16 32 16 8 4 ; 8 16 32 64 32 16 8 ;
+    4 8 16 32 16 8 4 ; 2 4 8 16 8 4 2 ; 1 2 4 8 4 2 1];
+
+image_filtre1 = filtre_gaussien(matrix,masque1);
+figure(), imshow(image_filtre1,[])
+title('Image filtree avec masque 3x3')
+figure(), mesh(image_filtre1)
+title('Intensite image filtree masque 3x3')
+
+image_filtre2 = filtre_gaussien(matrix,masque2);
+figure(), imshow(image_filtre2,[])
+title('Image filtree avec masque 5x5')
+figure(), mesh(image_filtre2)
+title('Intensite image filtree masque 5x5')
+
+image_filtre3 = filtre_gaussien(matrix,masque3);
+figure(), imshow(image_filtre3,[])
+title('Image filtree avec masque 7x7')
+figure(), mesh(image_filtre3)
+title('Intensite image filtree masque 7x7')
+
+% Q4
+masque = [1 2 4 8 16 8 4 2 1 ; 
+         2 4 8 16 32 16 8 4 2 ;
+         4 8 16 32 64 32 16 8 4 ;
+         8 16 32 64 128 64 32 16 8 ;
+         16 32 64 128 256 128 64 32 16;
+         8 16 32 64 128 64 32 16 8;
+         4 8 16 32 64 32 16 8 4 ; 
+         2 4 8 16 32 16 8 4 2 ; 
+         1 2 4 8 16 8 4 2 1];
+     
+m4_coef = sum(masque, 'all');
+masque4 = 1/m4_coef*masque;
+
+image_filtre4 = filtre_gaussien(matrix, masque4);
+figure(), imshow(image_filtre4,[])
+title('Image filtree avec masque 9x9')
+figure(), mesh(image_filtre4)
+title('Intensite image filtree masque 9x9')
+
+%L'augmentation de la valeur de l'ecart-type de la gaussienne entraine une
+%une plus grande propagation du bruit dans l'image. 
+
+% L'image originale est beaucoup plus claire que celle sur laquelle le
+% masque a ete applique. Les contours sont moins distincts et les details
+% moins visibles. Il est egalement possible de voir dans le graphe
+% d'intensite du masque 9x9 qu'il y a moins de pics d'intensite, (les
+% formes sont plus arrondies), ce qui signifie que l'image contient moins
+% de details.
+
+
+% Q5
+type filtre_laplacien.m
+
+% Q6
+type rehaussement_contour.m
+
+% Q7
+K = 1.5;
+image_filtree5 = rehaussement_contour(matrix, masque2, K);
+figure(), imshow(image_filtree5, [])
+title('Image rehaussee');
+
+image_gaussienne = conv2(matrix, masque2, 'same');
+image_filtree_L = filtre_laplacien(image_gaussienne);
+figure(), imshow(image_filtree_L, [])
+title('Image filtre Laplacien');
+
+% On peut voir dans l'image rehaussee que les contours sont moins definis
+% que dans l'image originelle, bien que cela ne soit pas le resultat
+% escompte. Cela s'explique par le fait que la taille du filtre gaussien
+% serait trop grande, donc on enleve trop de details en tentant de
+% supprimer le bruit de l'image et le filtre Laplacien ne suffit pas pour
+% afficher clairement les contours.
+
+% Q8
+for k = 0:10
+    image_filtree_k = rehaussement_contour(matrix, masque2, k);
+    figure(), imshow(image_filtree_k, [])
+    title(['Image rehaussee k=', num2str(k)]);
+    pause(0.5)
+end
+
+% Le probleme lorsque la valeur de K est trop élevée est que les détails de
+% l'image deviennent de plus en plus "pixelisés". On perd une certaine
+% qualité de la résolution.
+
+%% Exercice 2
+matrix = imread("fundus.png");
+
+% Q1
+seuil = 150;
+image_binarisee = binariser(matrix, seuil);
+figure(), imshow(image_binarisee)
+title('Image binarisée');
+
+type binariser.m
+
+% Q2
+rayon = 2;
+elem_struct = strel('disk', rayon);
+fermeture = imclose(image_binarisee, elem_struct);
+
+figure(), imshow(fermeture)
+title('Fermeture de limage binarisée');
+
+% Q3
+for i = 1:20
+    elem_struct = strel('disk', i);
+    fermeture = imerode(image_binarisee, elem_struct);
+    subplot(5,4,i);
+    imshow(fermeture, [])
+    title(['Image érodée avec un rayon de ', num2str(i)]);
+end
+
+
+% Q4
+% la meilleure approximation est avec un rayon de 11
+elem_structurel = strel('disk', 11);
+fermeture2 = imerode(image_binarisee, elem_structurel);
+figure(), imshow(fermeture2, [])
+title('Image érodée avec un rayon de 11');
+
+[x1,y1] = ginput(1);
+fprintf('Les coordonnées du centre du disque optique sont %d et %d \n', x1, y1)
+
+% Q5
+% Le rayon du disque optique en d'environ 11,5 pixels. Étant donné que nous
+% considérons que le disque optique est approximativement un cercle, nous utilisons 
+% un élément structurant qui est également un disque. Lors de l'érosion de
+% l'image, on peut constater que le centre du disque optique disparait lorsque 
+% le rayon de l'élément structurant passe de 11 à 12 pixels. 
+
+
+%% Exercice 3
+
+% Q1
+load mat_barre.mat;
+figure(), subplot(1, 3, 1);
+imshow(mat_barre_diag, [])
+subplot(1, 3, 2)
+imshow(mat_barre_x, [])
+subplot(1, 3, 3)
+imshow(mat_barre_y, [])
+sgtitle('Barres diagonale, horizontale et verticale')
+
+% Q2
+fft_diag = fft2(mat_barre_diag);
+fft_diag = fftshift(fft_diag);
+fft_diag_norm = normalize(abs(fft_diag));
+
+fft_hor = fft2(mat_barre_x);
+fft_hor = fftshift(fft_hor);
+fft_hor_norm = normalize(abs(fft_hor));
+
+fft_ver = fft2(mat_barre_y);
+fft_ver = fftshift(fft_ver);
+fft_ver_norm = normalize(abs(fft_ver));
+
+figure(), subplot(1, 3, 1)
+imshow(fft_diag_norm, [])
+subplot(1, 3, 2)
+imshow(fft_hor_norm, [])
+subplot(1, 3, 3)
+imshow(fft_ver_norm, [])
+sgtitle('Modules de la FFT de la barre diagonale, horizontale et verticale')
+
+type normalize.m
+
+% Q3
+% Étant donné que les barres sur lesquelles nous appliquons la fft et la
+% normalisation peuvent être considérées comme des rectangles, la réponse
+% que nous devrions recevoir est un sinus cardinal. C'est ce que nous
+% pouvons observer dans les 3 images générées. Il est également possible de
+% constater que les images résultantes ont toutes été tournées dans le sens
+% inverse de la fft.
+
+
+% Q4
+% Comme mentionné lors de la question précédente, le résultat de la fft 
+% d'un signal d'entrée représentant un rectangle donne un sinus cardinal,
+% ce qui explique la présence de zéros dans l'image finale.
+
+
+% Q5
+image1 = create_image(12, 80);
+image2 = create_image(12, 12);
+image3 = create_image(80, 12);
+
+figure(), subplot(2, 3, 1)
+imshow(image1, [])
+title('Image 1');
+subplot(2, 3, 2)
+imshow(image2, [])
+title('Image 2');
+subplot(2, 3, 3)
+imshow(image3, [])
+title('Image 3');
+sgtitle('Images créées sans FFT')
+
+
+fft_image1 = fft2(image1);
+fft_image1 = fftshift(fft_image1);
+fft_image1_norm = normalize(abs(fft_image1));
+
+fft_image2 = fft2(image2);
+fft_image2 = fftshift(fft_image2);
+fft_image2_norm = normalize(abs(fft_image2));
+
+fft_image3 = fft2(image3);
+fft_image3 = fftshift(fft_image3);
+fft_image3_norm = normalize(abs(fft_image3));
+
+subplot(2, 3, 4)
+imshow(fft_image1_norm, [])
+subplot(2, 3, 5)
+imshow(fft_image2_norm, [])
+subplot(2, 3, 6)
+imshow(fft_image3_norm, [])
+sgtitle('Modules de la FFT des images créées')
+
+type create_image.m
+
+% Dans chaque image du module de la fft, on observe 4 points. Dans ces
+% images, on peut observer que tous  les points qui sont alignés
+% verticalement correspondent aux lignes horizontales de l'image originale.
+% Il en est de même pour les points qui sont alignés horizontalement. Ces
+% derniers représentent les lignes verticales des images originales. Les
+% points que nous pouvons observer sont en fait les maximums de la
+% transformée de Fourrier d'un sinus. De plus, si nous agrandissons les
+% images, il est possible de voir des ondelettes autour de ces points. Cela
+% s'explique par le fait qu'il s'agit d'une fonction de Dirac. La position
+% des points est également liée à la fréquence du signal. De fait, les
+% points seront éloignés les uns des autres lorsque la fréquence sera
+% élevée, et ils seront rapprochés dans le cas où la fréquence est basse.
+
+
+%% Exercice 4
+
+% Q1
+type filtrage_frequentiel.m
+
+% Q2
+type filtrage_spatial.m
+
+% Q3
+matrix = imread("koala.png");
+d0 = 0.0398;
+image_filtree_freq = filtrage_frequentiel(matrix, d0);
+
+sigma = 4;
+image_filtree_spatial = filtrage_spatial(matrix, sigma);
+
+figure(), subplot(1, 2, 1)
+imshow(image_filtree_freq, [])
+title('Image filtrée dans le domaine fréquentiel');
+subplot(1, 2, 2)
+imshow(image_filtree_spatial, [])
+title('Image filtrée dans le domaine spatial');
+
+% Q4
+% En observant les images résultantes du domaine fréquentiel et du domaine
+% spatial, ces dernières semblent tout à fait identiques, mis à part les
+% contours (cadre) de l'image du domaine spatial qui sont plus foncés. La 
+% relation entre le domaine fréquentiel et le domaine spatial se fonde sur
+% le théorème de la convolution. Nous faisons une convolution pour le
+% filtre spatial avec l'image et nous faisons une multiplication dans le
+% domaine fréquentiel du filtre avec l'image encore une fois. En mettant en
+% relation les paramètres des exponentielles, il est possible de trouver
+% l'égalité fc = 1/(2pi*sigma), où fc est la fréquence de coupure.
+
+
+% Q5
+% En analysant les images obtenues après l'application du filtre idéal et
+% butterworth, il est possible d'observer que l'image résultante du
+% butterworth est plus définie que celle du filtre idéal. Bien que les deux
+% soient très floues, il est plus facile de discerner les formes et
+% contours avec un butterworth. Cela s'explique par le fait que le filtre
+% butterworth coupe de façon moins sèche les contours des images. 
+
+im1 = imread("koala-E4-Q5-ideal.jpg");
+im2 = imread("koala-E4-Q5-butterworth.jpg");
+
+figure(), subplot(1, 2, 1)
+imshow(im1, [])
+title('Image de koala avec filtre idéal');
+subplot(1, 2, 2)
+imshow(im2, [])
+title('Image de koala avec filtre butterworth');
+
+
+%% Exercice 5
+
+% Q1
+matrix = imread("XrayBar.jpg");
+
+spectre_normal = fftshift(abs(fft2(matrix)));
+spectre_logarithmique = 1 + log(fftshift(abs(fft2(matrix))));
+
+figure(), subplot(1, 2, 1)
+imshow(spectre_normal, [])
+title('Spectre normal de limage');
+subplot(1, 2, 2)
+imshow(spectre_logarithmique, [])
+title('Spectre logarithmique de limage');
+
+%  Dans le spectre normal de l'image, nous observons un point en forme de
+%  croix. Ce point ne nous fourni pas d'autes informations sur l'image que
+%  la plus grand intensité du spectre, en général. Dans le spectre
+%  logarithmique, nous observons une image brouillée où aucunes formes ne
+%  sont discernables, mais dans laquelle on peut voir plusieurs points
+%  lumineux. Ces points représentent les lignes diagonales de bruit qui
+%  sont présentes dans l'image originale.
+
+
+% Q2
+u = [1/8 1/4 3/8];
+v = [1/8 1/4 3/8];
+frequences_coupure = [0.03 0.02 0.01];
+
+masque = filtre_selectif(matrix, frequences_coupure, u, v);
+
+figure()
+imshow(masque, [])
+title('Masque du filtre sélectif');
+
+type filtre_selectif.m
+
+% Q3
+spectre = fftshift(fft2(matrix));
+image_filtree = normalize(ifft2(ifftshift(masque.*spectre)));
+figure()
+imshow(image_filtree, [])
+title('Image thoracique filtrée');
+
+% Nous avons le résultat escompté. Les lignes diagonales de bruit ont
+% presque totalement disparu. Il est possible de les voir si on magnifie
+% l'image, et si on observe les contours de certaines structures de
+% l'image.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
