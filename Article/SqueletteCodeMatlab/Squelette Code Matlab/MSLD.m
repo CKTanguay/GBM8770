@@ -40,7 +40,7 @@ classdef MSLD
            for i = L
                obj.line_detectors_masks{i} = zeros(i,i,n_orientation);
                matrix = zeros(i);
-               matrix(floor(g/2+1),:) = 1;
+               matrix(floor(i/2+1),:) = 1;
                for j = 0:(n_orientation-1)
                    temp = imrotate(matrix, angle*j, 'bilinear', 'crop');
                    obj.line_detectors_masks{i}(:,:,(j+1))= temp/sum(temp,'all');
@@ -64,13 +64,19 @@ classdef MSLD
            
            %%% TODO: I.Q4
            %Padding sur grey level avant avec padarray (mettre 1 pour taille masque diviser par 2 +1)
-           I_w_avg = conv2(grey_lvl,obj.avg_mask, 'valid');
-           for i = L
-                I_w_ligne(:,:,i) = conv2(grey_lvl, obj.line_detectors_masks{L}, 'valid');
+           pad_size = floor((obj.W/2)+1);
+           grey_lvl_pad = padarray(grey_lvl,[pad_size pad_size],1,'both');
+           I_w_avg = conv2(grey_lvl_pad,obj.avg_mask, 'valid');
+            
+           pad_size_2 = floor((L/2)+1);
+           grey_lvl_pad_L = padarray(grey_lvl, [pad_size_2 pad_size_2], 1, 'both');
+           
+           for i = 0:(obj.n_orientation-1)
+               I_w_ligne(:,:,(i+1)) = conv2(grey_lvl_pad_L, obj.line_detectors_masks{L}(:,:,(i+1)), 'valid');
            end
            I_w_max = max(I_w_ligne,[],3);
            R =  I_w_max - I_w_avg;
-           
+           R = R/sum(R,'all');
        end
        
        function Rcombined = multiScaleLineDetector(obj, image)
@@ -83,9 +89,28 @@ classdef MSLD
 
            
            %%% TODO: I.Q6
-           % ...
-           % Rcombined = ... ;
+           pad_size = floor((obj.W/2)+1);
+           image_pad = padarray(image,[pad_size pad_size],1,'both');
+           I_w_avg = conv2(image_pad,obj.avg_mask, 'valid');
+          
            
+           for j = 1:obj.W
+                pad_size_2 = floor((j/2)+1);
+                image_pad_L = padarray(image, [pad_size_2 pad_size_2], 1, 'both');
+                dims = size(image_pad_L);
+                
+                I_w_ligne_msld = zeros(dims(1), dims(2), obj.n_orientation);
+                for i = 0:(obj.n_orientation-1)
+                    I_w_ligne_msld(:,:,(i+1)) = conv2(image_pad_L, obj.line_detectors_masks{j}(:,:,(i+1)), 'valid');
+                end
+           
+                I_w_max = max(I_w_ligne_msld,[],3);
+                R =  I_w_max - I_w_avg;
+                R = R/sum(R,'all');
+                R_somme=+R;
+           end
+           Rcombined = 1/(obj.W+1)*(R_somme+image);
+          
        end
        
        function [threshold, accuracy, obj] = learnThreshold(obj, dataset)
