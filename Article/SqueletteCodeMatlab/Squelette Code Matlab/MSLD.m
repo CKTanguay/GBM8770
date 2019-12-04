@@ -89,19 +89,19 @@ classdef MSLD
 
            
            %%% TODO: I.Q6
-           pad_size = floor((obj.W/2)+1);
+           pad_size = floor((obj.W/2));
            image_pad = padarray(image,[pad_size pad_size],1,'both');
            I_w_avg = conv2(image_pad,obj.avg_mask, 'valid');
           
            
-           for j = 1:obj.W
-                pad_size_2 = floor((j/2)+1);
+           for j = 1:2:obj.W
+                pad_size_2 = floor((j/2));
                 image_pad_L = padarray(image, [pad_size_2 pad_size_2], 1, 'both');
                 dims = size(image_pad_L);
                 
-                I_w_ligne_msld = zeros(dims(1), dims(2), obj.n_orientation);
-                for i = 0:(obj.n_orientation-1)
-                    I_w_ligne_msld(:,:,(i+1)) = conv2(image_pad_L, obj.line_detectors_masks{j}(:,:,(i+1)), 'valid');
+                I_w_ligne_msld = [];
+                for i = 1:obj.n_orientation
+                    I_w_ligne_msld(:,:,i) = conv2(image_pad_L, obj.line_detectors_masks{j}(:,:,i), 'valid');
                 end
            
                 I_w_max = max(I_w_ligne_msld,[],3);
@@ -109,7 +109,7 @@ classdef MSLD
                 R = R/sum(R,'all');
                 R_somme=+R;
            end
-           Rcombined = 1/(obj.W+1)*(R_somme+image);
+           Rcombined = 1/(15+1)*(R_somme+double(255-image));
           
        end
        
