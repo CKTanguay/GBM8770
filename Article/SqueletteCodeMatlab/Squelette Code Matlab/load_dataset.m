@@ -17,7 +17,7 @@ function [train, test] = load_dataset()
         name = files_train(i).name;
         train(i).name = name;
         %%% TODO I.Q3 Chargez les images data, label et mask:
-        train(i).data = imread(['DRIVE/data/training/',name]); % Type: double, intensité comprises entre 0 et 1
+        train(i).data = im2double(imread(['DRIVE/data/training/',name])); % Type: double, intensité comprises entre 0 et 1);
         train(i).label = imread(['DRIVE/label/training/',name]); % Type: booléen
         train(i).mask = imread(['DRIVE/mask/training/',name]);  % Type: booléen
     end
@@ -27,7 +27,7 @@ function [train, test] = load_dataset()
     for i=1:length(files_test)
         name = files_test(i).name;
         test(i).name = name;
-        test(i).data = imread(['DRIVE/data/test/',name]); % Type: double, intensité comprises entre 0 et 1
+        test(i).data = im2double(imread(['DRIVE/data/test/',name])); % Type: double, intensité comprises entre 0 et 1
         test(i).label = imread(['DRIVE/label/test/',name]); % Type: booléen
         test(i).mask = imread(['DRIVE/mask/test/',name]);  % Type: booléen
     end

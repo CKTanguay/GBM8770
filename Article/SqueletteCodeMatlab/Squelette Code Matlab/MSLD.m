@@ -63,12 +63,12 @@ classdef MSLD
        %                   et donc que obj.line_detectors_masks{L} existe).
            
            %%% TODO: I.Q4
-           %Padding sur grey level avant avec padarray (mettre 1 pour taille masque diviser par 2 +1)
-           pad_size = floor((obj.W/2)+1);
+         
+           pad_size = floor((obj.W/2));
            grey_lvl_pad = padarray(grey_lvl,[pad_size pad_size],1,'both');
            I_w_avg = conv2(grey_lvl_pad,obj.avg_mask, 'valid');
             
-           pad_size_2 = floor((L/2)+1);
+           pad_size_2 = floor((L/2));
            grey_lvl_pad_L = padarray(grey_lvl, [pad_size_2 pad_size_2], 1, 'both');
            
            for i = 0:(obj.n_orientation-1)
@@ -76,7 +76,8 @@ classdef MSLD
            end
            I_w_max = max(I_w_ligne,[],3);
            R =  I_w_max - I_w_avg;
-           R = R/sum(R,'all');
+           R = (R-mean(R,'all'))./std(R,0,'all');
+          
        end
        
        function Rcombined = multiScaleLineDetector(obj, image)
@@ -86,30 +87,15 @@ classdef MSLD
        %    obj: Instance courante de la classe MSLD
        %    image: Image aux intensitées comprises entre 0 et 1 et aux 
        %           dimensions [hauteur, largeur, canal] (canal: R=1 G=2 B=3)
-
            
            %%% TODO: I.Q6
-           pad_size = floor((obj.W/2));
-           image_pad = padarray(image,[pad_size pad_size],1,'both');
-           I_w_avg = conv2(image_pad,obj.avg_mask, 'valid');
-          
-           
+           grey_lvl = 1-image.data(:,:,2);
+           R_somme = 0;
            for j = 1:2:obj.W
-                pad_size_2 = floor((j/2));
-                image_pad_L = padarray(image, [pad_size_2 pad_size_2], 1, 'both');
-                dims = size(image_pad_L);
-                
-                I_w_ligne_msld = [];
-                for i = 1:obj.n_orientation
-                    I_w_ligne_msld(:,:,i) = conv2(image_pad_L, obj.line_detectors_masks{j}(:,:,i), 'valid');
-                end
-           
-                I_w_max = max(I_w_ligne_msld,[],3);
-                R =  I_w_max - I_w_avg;
-                R = R/sum(R,'all');
-                R_somme=+R;
+                R = obj.basicLineDetector(grey_lvl, j);
+                R_somme=R_somme+R;
            end
-           Rcombined = 1/(15+1)*(R_somme+double(255-image));
+          Rcombined = (1/(8+1))*(R_somme+double(grey_lvl)); %gros hardcode de la valeur 8 car 8 valeurs impaires de 1 a 15
           
        end
        
@@ -125,28 +111,37 @@ classdef MSLD
        %    obj:  Instance courante de la classe MSLD
        %    dataset: cell array contenant les colonnes: data, label, mask.
        %
-       %    threshold: Seuille proposant la meilleure précision
+       %    threshold: Seuil proposant la meilleure précision
        %    accuracy: Valeur de la meilleure précision
        %    obj: Instance courante de la classe MSLD avec le nouveau seuil
        
-           [tpr, fpr, thresholds] = obj.roc(dataset);
+           [tpr, fpr, thresholds] = obj.rocknroll(dataset);
+           label_final=0;
+           for i = 1:length(dataset)
+                label_temp = dataset(i).label(dataset(i).mask);
+                label_final = cat(1, label_final, label_temp);
+           end
+           
+           p = sum(label_final(:) == 1);
+           n = sum(label_final(:) == 0);
            
            %%% TODO: I.Q10
            % ...
-           % threshold = ... ;
-           
-           
+
+           [accuracy,y] = max((p*tpr + n*(1-fpr))/(p+n));
+           threshold = thresholds(y);
            obj.threshold = threshold;
        end
        
-       function [vessels] = segmentVessels(obj, image)
+       function vessels = segmentVessels(obj, image)
        % Segmente les vaisseaux sur une image en utilisant la MSLD.
        %    obj: Instance courante de la classe MSLD
        %    image: Image sur laquelle appliquer l'algorithme
 
            %%% TODO: I.Q13 
            %%% Utilisez obj.multiScaleLineDetector(image) et obj.threshold.
-           
+           vessels = obj.multiScaleLineDetector(image);
+           vessels = vessels>=obj.threshold;           
        end
        
        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,9 +162,17 @@ classdef MSLD
        
             %%% TODO: I.Q16
             % ...
-            % green = ... ;
-            % red = ... ;
-            % blue = ... ;
+            vessels = obj.segmentVessels(sample);
+            
+            vrai_positif = sample.label==1;
+            vrai_negatif = sample.label==0;
+          
+            vessels_positif = vessels==1;
+            vessels_negatif = vessels==0;
+            
+            red = (vessels_positif-vrai_positif).*sample.mask+vrai_positif.*sample.mask;
+            blue =  (vessels_negatif-vrai_negatif).*sample.mask+vrai_positif.*sample.mask;
+            green = vrai_positif.*sample.mask;
             
             
             imshow(cat(3, red,green,blue));
@@ -180,7 +183,7 @@ classdef MSLD
        %                    SEGMENTATION METRICS                          %
        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
        
-       function [tpr, fpr, thresholds] = roc(obj, dataset)
+       function [tpr, fpr, thresholds] = rocknroll(obj, dataset)
        % Calcul la courbe ROC de l'algorithme MSLD sur un dataset donné et
        % sur la région d'intérêt indiquée par le champs mask.
        %
@@ -195,11 +198,20 @@ classdef MSLD
            %%% Vous pouvez utiliser la fonction Matlab: roc().
            %%%
            %%% L'itéreration sur le dataset se fait par:
-           %%% for d=dataset
-           %%%     label = d.label;
-           %%%     mask = d.mask;
-           %%%     ...
-           %%% end
+           label_final = [];
+           image_finale = [];
+           d=dataset;
+           for i=1:length(dataset)
+               label = d(i).label;
+               mask = d(i).mask;
+               
+               label_temp = label(mask);
+               label_final = cat(1, label_final, label_temp);
+               
+               image_temp = obj.multiScaleLineDetector(d(i));
+               image_finale = cat(1, image_finale, image_temp(mask));
+           end
+           [tpr, fpr, thresholds] = roc(label_final', image_finale');
            
        end
        
@@ -216,7 +228,26 @@ classdef MSLD
        %                      nombre de labels positifs et négatifs
        
            %%% TODO: II.Q1
+           label_final = [];
+           image_finale = [];
+          
+           for i = 1:length(dataset)
+               label = dataset(i).label;
+               mask = dataset(i).mask;
+               
+               label_temp = label(mask);
+               label_final = cat(1, label_final, label_temp);
+               
+               image_temp = obj.segmentVessels(dataset(i));
+               image_finale = cat(1, image_finale, image_temp(mask)); 
+              
+           end
            
+           p = sum(label_final(:) == 1);
+           n = sum(label_final(:) == 0);
+           
+           confusion_matrix = confusionmat(label_final',image_finale');
+           accuracy = (confusion_matrix(1,1)+confusion_matrix(2,2))/(p+n);
        end
        
        function [diceIndex] = dice(obj, dataset)
@@ -230,7 +261,21 @@ classdef MSLD
        
            %%% TODO: II.Q6
            %%% Vous pouvez utiliser la function Matlab: dice().
-           
+           label_final = [];
+           image_finale = [];
+          
+           for i = 1:length(dataset)
+               label = dataset(i).label;
+               mask = dataset(i).mask;
+               
+               label_temp = label(mask);
+               label_final = cat(1, label_final, label_temp);
+               
+               image_temp = obj.segmentVessels(dataset(i));
+               image_finale = cat(1, image_finale, image_temp(mask)); 
+              
+           end
+           [diceIndex] = dice(label_final',image_finale');
        end
        
        function [aur] = plotROC(obj, dataset)
@@ -245,7 +290,11 @@ classdef MSLD
        
            %%% TODO: II.Q8
            %%% Utilisez la méthode obj.roc(dataset) déjà implémentée.
-           
+           [TPR, FPR, ~] = obj.rocknroll(dataset);
+           plot(FPR, TPR)
+           xlabel('FPR')
+           ylabel('TPR')
+           aur = trapz(FPR, TPR);
        end
    end
 end
